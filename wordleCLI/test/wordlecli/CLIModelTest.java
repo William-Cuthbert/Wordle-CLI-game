@@ -1,5 +1,6 @@
 package wordlecli;
 
+import java.io.IOException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -7,9 +8,10 @@ public class CLIModelTest {
 
     /**
      * Test of getRowCount method, of class CLIModel.
+     * @throws java.io.IOException
      */
     @Test
-    public void testGetRowCount() {
+    public void testGetRowCount() throws IOException {
         System.out.println("getRowCount");
         CLIModel instance = new CLIModel();
         int expResult = 0;
@@ -19,9 +21,10 @@ public class CLIModelTest {
 
     /**
      * Test of getColCount method, of class CLIModel.
+     * @throws java.io.IOException
      */
     @Test
-    public void testGetColCount() {
+    public void testGetColCount() throws IOException {
         System.out.println("getColCount");
         CLIModel instance = new CLIModel();
         int expResult = 0;
@@ -31,9 +34,10 @@ public class CLIModelTest {
 
     /**
      * Test of countGuesses method, of class CLIModel.
+     * @throws java.io.IOException
      */
     @Test
-    public void testCountGuesses() {
+    public void testCountGuesses() throws IOException {
         System.out.println("countGuesses");
         CLIModel instance = new CLIModel();
         int expResult = 0;
@@ -43,9 +47,10 @@ public class CLIModelTest {
 
     /**
      * Test of getGuess method, of class CLIModel.
+     * @throws java.io.IOException
      */
     @Test
-    public void testGetGuess() {
+    public void testGetGuess() throws IOException {
         System.out.println("getGuess");
         int index = 0;
         CLIModel instance = new CLIModel();
@@ -56,9 +61,10 @@ public class CLIModelTest {
 
     /**
      * Test of getAnswer method, of class CLIModel.
+     * @throws java.io.IOException
      */
     @Test
-    public void testGetAnswer() {
+    public void testGetAnswer() throws IOException {
         System.out.println("getAnswer");
         CLIModel instance = new CLIModel();
         String expResult = "";
@@ -68,9 +74,10 @@ public class CLIModelTest {
 
     /**
      * Test of hasWon method, of class CLIModel.
+     * @throws java.io.IOException
      */
     @Test
-    public void testHasWon() {
+    public void testHasWon() throws IOException {
         System.out.println("hasWon");
         CLIModel instance = new CLIModel();
         boolean expResult = false;
@@ -80,9 +87,10 @@ public class CLIModelTest {
 
     /**
      * Test of isGameOver method, of class CLIModel.
+     * @throws java.io.IOException
      */
     @Test
-    public void testIsGameOver() {
+    public void testIsGameOver() throws IOException {
         System.out.println("isGameOver");
         CLIModel instance = new CLIModel();
         boolean expResult = false;
@@ -92,11 +100,13 @@ public class CLIModelTest {
 
     /**
      * Test of guess method, of class CLIModel.
+     * @throws java.io.IOException
      */
     @Test
-    public void testGuess() {
+    public void testGuess() throws IOException {
         System.out.println("guess");
         String str = "";
         CLIModel instance = new CLIModel();
         instance.guess(str);
+    }
 }
