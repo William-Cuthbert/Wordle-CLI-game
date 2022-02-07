@@ -14,7 +14,7 @@ public class CLIModel {
         this.rowCount = 5;
         this.colCount = 6;
         this.guesses = new ArrayList<String>();
-        this.filePath = "";
+        this.filePath = "words.txt";
         this.answer = generateAnswer(filePath);
     }
 
