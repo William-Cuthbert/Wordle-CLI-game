@@ -1,5 +1,6 @@
 package wordlecli;
 
+import wordlecli.model.Model;
 import java.io.IOException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -13,7 +14,7 @@ public class CLIModelTest {
     @Test
     public void testGetRowCount() throws IOException {
         System.out.println("getRowCount");
-        CLIModel instance = new CLIModel();
+        Model instance = new Model();
         int expResult = 0;
         int result = instance.getRowCount();
         assertEquals(expResult, result);
@@ -26,7 +27,7 @@ public class CLIModelTest {
     @Test
     public void testGetColCount() throws IOException {
         System.out.println("getColCount");
-        CLIModel instance = new CLIModel();
+        Model instance = new Model();
         int expResult = 0;
         int result = instance.getColCount();
         assertEquals(expResult, result);
@@ -39,7 +40,7 @@ public class CLIModelTest {
     @Test
     public void testCountGuesses() throws IOException {
         System.out.println("countGuesses");
-        CLIModel instance = new CLIModel();
+        Model instance = new Model();
         int expResult = 0;
         int result = instance.countGuesses();
         assertEquals(expResult, result);
@@ -53,9 +54,9 @@ public class CLIModelTest {
     public void testGetGuess() throws IOException {
         System.out.println("getGuess");
         int index = 0;
-        CLIModel instance = new CLIModel();
+        Model instance = new Model();
         String expResult = "";
-        String result = instance.getGuess(index);
+        String result = instance.getGuessIndex(index);
         assertEquals(expResult, result);
     }
 
@@ -66,7 +67,7 @@ public class CLIModelTest {
     @Test
     public void testGetAnswer() throws IOException {
         System.out.println("getAnswer");
-        CLIModel instance = new CLIModel();
+        Model instance = new Model();
         String expResult = "";
         String result = instance.getAnswer();
         assertEquals(expResult, result);
@@ -79,7 +80,7 @@ public class CLIModelTest {
     @Test
     public void testHasWon() throws IOException {
         System.out.println("hasWon");
-        CLIModel instance = new CLIModel();
+        Model instance = new Model();
         boolean expResult = false;
         boolean result = instance.hasWon();
         assertEquals(expResult, result);
@@ -92,7 +93,7 @@ public class CLIModelTest {
     @Test
     public void testIsGameOver() throws IOException {
         System.out.println("isGameOver");
-        CLIModel instance = new CLIModel();
+        Model instance = new Model();
         boolean expResult = false;
         boolean result = instance.isGameOver();
         assertEquals(expResult, result);
@@ -106,7 +107,7 @@ public class CLIModelTest {
     public void testGuess() throws IOException {
         System.out.println("guess");
         String str = "";
-        CLIModel instance = new CLIModel();
-        instance.guess(str);
+        Model instance = new Model();
+        instance.addGuess(str);
     }
 }
