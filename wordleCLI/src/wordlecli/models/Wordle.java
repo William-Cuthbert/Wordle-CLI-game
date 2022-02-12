@@ -1,10 +1,10 @@
-package wordlecli.model;
+package wordlecli.models;
 
 import java.util.ArrayList;
 import java.io.IOException;
 import wordlecli.interfaces.wordleStrategy;
 
-public class Model implements wordleStrategy {
+public class Wordle implements wordleStrategy {
 
     private int rowCount;
     private int colCount;
@@ -17,7 +17,7 @@ public class Model implements wordleStrategy {
      *
      * @throws IOException
      */
-    public Model() throws IOException {
+    public Wordle() throws IOException {
         setUpWord(filePath);
     }
     
