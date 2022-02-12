@@ -1,6 +1,6 @@
 package wordlecli;
 
-import wordlecli.model.Model;
+import wordlecli.models.Wordle;
 import java.io.IOException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,7 +14,7 @@ public class CLIModelTest {
     @Test
     public void testGetRowCount() throws IOException {
         System.out.println("getRowCount");
-        Model instance = new Model();
+        Wordle instance = new Wordle();
         int expResult = 0;
         int result = instance.getRowCount();
         assertEquals(expResult, result);
@@ -27,7 +27,7 @@ public class CLIModelTest {
     @Test
     public void testGetColCount() throws IOException {
         System.out.println("getColCount");
-        Model instance = new Model();
+        Wordle instance = new Wordle();
         int expResult = 0;
         int result = instance.getColCount();
         assertEquals(expResult, result);
@@ -40,7 +40,7 @@ public class CLIModelTest {
     @Test
     public void testCountGuesses() throws IOException {
         System.out.println("countGuesses");
-        Model instance = new Model();
+        Wordle instance = new Wordle();
         int expResult = 0;
         int result = instance.countGuesses();
         assertEquals(expResult, result);
@@ -54,7 +54,7 @@ public class CLIModelTest {
     public void testGetGuess() throws IOException {
         System.out.println("getGuess");
         int index = 0;
-        Model instance = new Model();
+        Wordle instance = new Wordle();
         String expResult = "";
         String result = instance.getGuessIndex(index);
         assertEquals(expResult, result);
@@ -67,7 +67,7 @@ public class CLIModelTest {
     @Test
     public void testGetAnswer() throws IOException {
         System.out.println("getAnswer");
-        Model instance = new Model();
+        Wordle instance = new Wordle();
         String expResult = "";
         String result = instance.getAnswer();
         assertEquals(expResult, result);
@@ -80,7 +80,7 @@ public class CLIModelTest {
     @Test
     public void testHasWon() throws IOException {
         System.out.println("hasWon");
-        Model instance = new Model();
+        Wordle instance = new Wordle();
         boolean expResult = false;
         boolean result = instance.hasWon();
         assertEquals(expResult, result);
@@ -93,7 +93,7 @@ public class CLIModelTest {
     @Test
     public void testIsGameOver() throws IOException {
         System.out.println("isGameOver");
-        Model instance = new Model();
+        Wordle instance = new Wordle();
         boolean expResult = false;
         boolean result = instance.isGameOver();
         assertEquals(expResult, result);
@@ -107,7 +107,7 @@ public class CLIModelTest {
     public void testGuess() throws IOException {
         System.out.println("guess");
         String str = "";
-        Model instance = new Model();
+        Wordle instance = new Wordle();
         instance.addGuess(str);
     }
 }
