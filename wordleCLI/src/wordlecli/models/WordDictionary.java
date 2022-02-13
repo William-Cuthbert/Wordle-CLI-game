@@ -1,4 +1,4 @@
-package wordlecli.model;
+package wordlecli.models;
 
 import java.io.IOException;
 import java.nio.file.Files;
