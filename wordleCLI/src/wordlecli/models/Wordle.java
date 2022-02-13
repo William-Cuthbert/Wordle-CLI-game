@@ -2,9 +2,8 @@ package wordlecli.models;
 
 import java.util.ArrayList;
 import java.io.IOException;
-import wordlecli.interfaces.wordleStrategy;
 
-public class Wordle implements wordleStrategy {
+public class Wordle {
 
     private int rowCount;
     private int colCount;
@@ -84,7 +83,6 @@ public class Wordle implements wordleStrategy {
      *
      * @return
      */
-    @Override
     public boolean hasWon() {
         assert guesses.size() >= 1;
         return guesses.contains(getAnswer());
@@ -94,7 +92,6 @@ public class Wordle implements wordleStrategy {
      *
      * @return
      */
-    @Override
     public boolean hasLost() {
         return guesses.size() == getRowCount();
     }
@@ -103,7 +100,6 @@ public class Wordle implements wordleStrategy {
      *
      * @return
      */
-    @Override
     public boolean isGameOver() {
         return hasWon() || hasLost();
     }
@@ -112,7 +108,6 @@ public class Wordle implements wordleStrategy {
      *
      * @param str
      */
-    @Override
     public void addGuess(String str) {
         assert str.length() == getRowCount() && dictionary.containsWord(str);
         guesses.add(str);
@@ -124,7 +119,6 @@ public class Wordle implements wordleStrategy {
      * @param answer
      * @return 
      */
-    @Override
     public String compareGuessToAnswer(String word, String answer) {
         assert word != null && answer != null;
         String result = "";
