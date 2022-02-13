@@ -1,10 +1,9 @@
-package wordlecli.model;
+package wordlecli.models;
 
 import java.util.ArrayList;
 import java.io.IOException;
-import wordlecli.interfaces.wordleStrategy;
 
-public class Model implements wordleStrategy {
+public class Wordle {
 
     private int rowCount;
     private int colCount;
@@ -17,7 +16,7 @@ public class Model implements wordleStrategy {
      *
      * @throws IOException
      */
-    public Model() throws IOException {
+    public Wordle() throws IOException {
         setUpWord(filePath);
     }
     
@@ -84,7 +83,6 @@ public class Model implements wordleStrategy {
      *
      * @return
      */
-    @Override
     public boolean hasWon() {
         assert guesses.size() >= 1;
         return guesses.contains(getAnswer());
@@ -94,7 +92,6 @@ public class Model implements wordleStrategy {
      *
      * @return
      */
-    @Override
     public boolean hasLost() {
         return guesses.size() == getRowCount();
     }
@@ -103,7 +100,6 @@ public class Model implements wordleStrategy {
      *
      * @return
      */
-    @Override
     public boolean isGameOver() {
         return hasWon() || hasLost();
     }
@@ -112,7 +108,6 @@ public class Model implements wordleStrategy {
      *
      * @param str
      */
-    @Override
     public void addGuess(String str) {
         assert str.length() == getRowCount() && dictionary.containsWord(str);
         guesses.add(str);
@@ -121,15 +116,22 @@ public class Model implements wordleStrategy {
     /**
      *
      * @param word
+     * @param answer
      * @return 
      */
-    @Override
-    public boolean compareGuessToAnswer(String word) {
-        assert word != null;
-        char character = word.charAt(0);
-        for (int i = 0; i < word.length(); i++) {
-                
-        }            
-        return false;
+    public String compareGuessToAnswer(String word, String answer) {
+        assert word != null && answer != null;
+        String result = "";
+        for (int ch = 0; ch < word.length(); ch++) {
+            char getChar = word.charAt(ch);
+            if (ch < word.length() && getChar == answer.charAt(ch)) {
+                result += Character.toString(getChar); // need to get Green
+            } else if (answer.contains(String.valueOf(getChar))) {
+                result += Character.toString(getChar); //need to get Yellow
+            } else {
+                result += getChar;
+            }
+        }
+        return result;
     }
 }
