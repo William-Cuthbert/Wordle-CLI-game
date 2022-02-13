@@ -5,5 +5,5 @@ public interface wordleStrategy {
     boolean isGameOver();
     boolean hasWon();
     boolean hasLost();
-    boolean compareGuessToAnswer(String word);
+    String compareGuessToAnswer(String word, String answer);
 }

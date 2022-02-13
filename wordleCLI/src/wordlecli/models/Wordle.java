@@ -121,15 +121,23 @@ public class Wordle implements wordleStrategy {
     /**
      *
      * @param word
+     * @param answer
      * @return 
      */
     @Override
-    public boolean compareGuessToAnswer(String word) {
-        assert word != null;
-        char character = word.charAt(0);
-        for (int i = 0; i < word.length(); i++) {
-                
-        }            
-        return false;
+    public String compareGuessToAnswer(String word, String answer) {
+        assert word != null && answer != null;
+        String result = "";
+        for (int ch = 0; ch < word.length(); ch++) {
+            char getChar = word.charAt(ch);
+            if (ch < word.length() && getChar == answer.charAt(ch)) {
+                result += Character.toString(getChar); // need to get Green
+            } else if (answer.contains(String.valueOf(getChar))) {
+                result += Character.toString(getChar); //need to get Yellow
+            } else {
+                result += getChar;
+            }
+        }
+        return result;
     }
 }
