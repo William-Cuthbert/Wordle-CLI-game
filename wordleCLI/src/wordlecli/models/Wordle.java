@@ -9,7 +9,7 @@ public class Wordle {
     private int colCount;
     private ArrayList<String> guesses;
     private String answer;
-    private final static String filePath = "dictonary/common.txt";
+    private final static String filePath = "dictionary/common.txt";
     private WordDictionary dictionary;
 
     /**
@@ -111,27 +111,5 @@ public class Wordle {
     public void addGuess(String str) {
         assert str.length() == getRowCount() && dictionary.containsWord(str);
         guesses.add(str);
-    }
-    
-    /**
-     *
-     * @param word
-     * @param answer
-     * @return 
-     */
-    public String compareGuessToAnswer(String word, String answer) {
-        assert word != null && answer != null;
-        String result = "";
-        for (int ch = 0; ch < word.length(); ch++) {
-            char getChar = word.charAt(ch);
-            if (ch < word.length() && getChar == answer.charAt(ch)) {
-                result += Character.toString(getChar); // need to get Green
-            } else if (answer.contains(String.valueOf(getChar))) {
-                result += Character.toString(getChar); //need to get Yellow
-            } else {
-                result += getChar;
-            }
-        }
-        return result;
     }
 }

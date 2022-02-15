@@ -3,70 +3,120 @@ package wordlecli.views;
 import wordlecli.models.Wordle;
 
 public class View {
-    private static String title = "wordle"; //==================\nWORDLE\n==================\n";
+
+    private static final String title = "==================\nWORDLE\n==================\n";
     private static String leftPadding = " ";
-    
-    private enum Color {
-        
-        YELLOW("\033[0;103m"),
-        GREEN("\033[0;102m");
-        
+
+    private enum HIGHLIGHTER {
+
+        YELLOW("\u001B[33m"),
+        GREEN("\u001B[32m");
+
         private final String backgroundColor;
-        private final static String ANSI_RESET = "\u001B[0n";
-        
-        private Color(String backgroundColor) {
+        private final static String backgroundReset = "\u001B[0m";
+
+        private HIGHLIGHTER(String backgroundColor) {
             this.backgroundColor = backgroundColor;
         }
     }
-    
-    public static void setTitle(String str) {
-        title = str;
-    }
-    
+
+    /**
+     *
+     */
     public static void requestInput() {
-        System.out.println("Enter a valid word:\n");
+        System.out.print("Enter a valid word:\n");
     }
-    
+
+    /**
+     *
+     * @param word
+     * @return
+     */
+    public static boolean validateInput(String word) {
+        assert word != null;
+        boolean notValidWord = false;
+        String special = " !#$%&'()*+,-./:;<=>?@[]^_`{|}~0123456789;";
+        for (int i = 0; i < special.length(); i++) {
+            char specialChar = special.charAt(i);
+            for (int k = 0; k < word.length(); k++) {
+                char charFromWord = word.charAt(k);
+                if (specialChar == charFromWord) {
+                    notValidWord = true;
+                }
+            }
+        }
+        return word.length() == 5 && !notValidWord;
+    }
+
+    /**
+     *
+     * @param answer
+     */
     public static void printAnswer(String answer) {
         System.out.println("Answer:\n " + answer);
     }
-    
+
+    /**
+     *
+     */
+    public static void reEnterInput() {
+        System.out.print("Enter a valid word:\n");
+    }
+
+    /**
+     *
+     */
     public static void cleanUp() {
+        System.out.print("\033\143");
         System.out.flush();
     }
+
+    /**
+     *
+     * @param wordleGame
+     */
     public static void printGameBoard(Wordle wordleGame) {
         System.out.println(title);
         for (int i = 0; i < wordleGame.getRowCount(); i++) {
             if (i < wordleGame.countGuesses()) {
-                System.out.println(compareGuessToAnswer(wordleGame.getGuessIndex(i), wordleGame.getAnswer()));
+                compareGuessToAnswer(wordleGame.getGuessIndex(i), wordleGame.getAnswer());
             } else {
-                System.out.println(leftPadding + " |".repeat(wordleGame.getColCount() -1));
+                paddingFormat(" |".repeat(wordleGame.getColCount() - 1));
             }
-            
-            if (i != wordleGame.getRowCount() -1) {
-                System.out.println(leftPadding + "-".repeat(wordleGame.getColCount() * 2 -1));
+
+            if (i != wordleGame.getRowCount() - 1) {
+                paddingFormat("-".repeat(wordleGame.getColCount() * 2 - 1));
             } else {
-                System.out.println(leftPadding + "");
+                paddingFormat("");
             }
         }
     }
-    
-    private static String compareGuessToAnswer(String word, String answer) {
-        assert word != null && answer != null;
+
+    private static void compareGuessToAnswer(String inputWord, String getAnswer) {
+        assert inputWord != null && getAnswer != null;
         String result = "";
-        for (int ch = 0; ch < word.length(); ch++) {
-            char getChar = word.charAt(ch);
-            if (ch < word.length() && getChar == answer.charAt(ch)) {
-                result += Color.GREEN + Character.toString(getChar) + Color.ANSI_RESET;
-            } else if (answer.contains(String.valueOf(getChar))) {
-                result += Color.YELLOW + Character.toString(getChar) + Color.ANSI_RESET;
+        for (int index = 0; index < inputWord.length(); index++) {
+            char getChar = inputWord.charAt(index);
+            if (index < inputWord.length() && getChar == getAnswer.charAt(index)) {
+                result += toHighlight(Character.toString(getChar), HIGHLIGHTER.GREEN);
+            } else if (getAnswer.contains(String.valueOf(getChar))) {
+                result += toHighlight(Character.toString(getChar), HIGHLIGHTER.YELLOW);
             } else {
                 result += getChar;
             }
-            if (ch != word.length() -1) {
+
+            if (index != inputWord.length() - 1) {
                 result += "|";
             }
-        }       
-        return leftPadding + result;
+        }
+        paddingFormat(result);
+    }
+
+    private static String toHighlight(String word, HIGHLIGHTER highlight) {
+        return highlight.backgroundColor + word + HIGHLIGHTER.backgroundReset;
+    }
+
+    private static void paddingFormat(String str) {
+        System.out.println(leftPadding + str);
     }
 }
