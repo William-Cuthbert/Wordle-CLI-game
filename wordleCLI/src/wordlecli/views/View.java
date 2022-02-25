@@ -4,14 +4,15 @@ import wordlecli.models.Wordle;
 
 public class View {
 
-    private static final String title = "==================\nWORDLE\n==================\n";
+    private static final String title = "\n==================\n     WORDLE\n==================\n";
     private static String leftPadding = " ";
 
     private enum HIGHLIGHTER {
-
-        YELLOW("\u001B[33m"),
-        GREEN("\u001B[32m");
-
+        
+        YELLOW("\u001B[43m"),
+        GREEN("\u001B[42m"),
+        GREY("\u001B[47m");
+        
         private final String backgroundColor;
         private final static String backgroundReset = "\u001B[0m";
 
@@ -102,7 +103,8 @@ public class View {
             } else if (getAnswer.contains(String.valueOf(getChar))) {
                 result += toHighlight(Character.toString(getChar), HIGHLIGHTER.YELLOW);
             } else {
-                result += getChar;
+                //result += getChar;
+                result += toHighlight(Character.toString(getChar),HIGHLIGHTER.GREY);
             }
 
             if (index != inputWord.length() - 1) {
