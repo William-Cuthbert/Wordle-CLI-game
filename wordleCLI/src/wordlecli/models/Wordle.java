@@ -9,7 +9,7 @@ public class Wordle {
     private int colCount;
     private ArrayList<String> guesses;
     private String answer;
-    private final static String filePath = "dictionary/common.txt";
+    private final static String filePath = "C:/Users/wcuth/Documents/GitHub/wordleCLI-game/wordleCLI/dictionary/common.txt";
     private WordDictionary dictionary;
 
     /**
