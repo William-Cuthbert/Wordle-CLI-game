@@ -9,27 +9,28 @@ public class Wordle {
     private int colCount;
     private ArrayList<String> guesses;
     private String answer;
-    private final static String filePath = "C:/Users/wcuth/Documents/GitHub/wordleCLI-game/wordleCLI/dictionary/common.txt";
     private WordDictionary dictionary;
+    private final static String filePathToTargetWords = "C:/Users/wcuth/Documents/GitHub/wordleCLI-game/wordleCLI/dictionary/common.txt";
+    private final static String filePathToGuessWords = "C:/Users/wcuth/Documents/GitHub/wordleCLI-game/wordleCLI/dictionary/words.txt";
 
     /**
      *
      * @throws IOException
      */
     public Wordle() throws IOException {
-        setUpWord(filePath);
+        setUpWord();
     }
     
     /**
      *
      * @param filePath
      */
-    private void setUpWord(String filePath) throws IOException {
+    private void setUpWord() throws IOException {
         assert this != null;
         this.rowCount = 6;
         this.colCount = 5;
         this.guesses = new ArrayList<>();
-        this.dictionary = new WordDictionary(filePath);
+        this.dictionary = new WordDictionary(filePathToTargetWords, filePathToGuessWords);
         this.answer = dictionary.getRandomWord();
     }
     
@@ -109,7 +110,17 @@ public class Wordle {
      * @param str
      */
     public void addGuess(String str) {
-        assert str.length() == getRowCount() && dictionary.containsWord(str);
-        guesses.add(str);
+        if (str.length() == getColCount() && dictionary.containsTargetWords(str) || dictionary.containsGuessWords(str)) {
+            guesses.add(str);
+        }
+    }
+    
+    /**
+     *
+     * @param str
+     * @return
+     */
+    public boolean notInDictionary(String str) {
+        return !dictionary.containsGuessWords(str) && !dictionary.containsTargetWords(str);
     }
 }
