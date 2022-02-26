@@ -25,9 +25,9 @@ public class Main {
 
                 View.requestInput();
                 input = guess.nextLine();
-
-                while (!View.validateInput(input)) {
-                    System.out.println("Please use a-z A-Z characters or write 5 letters only");
+                
+                while (wordle_game.notInDictionary(input)) {
+                    View.validating_message();
                     View.requestInput();
                     input = guess.nextLine();
                 }
@@ -40,13 +40,7 @@ public class Main {
             View.printAnswer(wordle_game.getAnswer());
             guess.close();
 
-            if (wordle_game.hasLost()) {
-                System.out.println("==================\n     You lose!\n==================");
-            } 
-            
-            if (wordle_game.hasWon()) {
-                System.out.println("==================\n    Well done!\n==================");
-            }
+            View.result_message(wordle_game);
         }
     }
 }
