@@ -6,6 +6,7 @@ public class View {
 
     private static final String title = "\n==================\n     WORDLE\n==================\n";
     private static String leftPadding = " ";
+    
 
     private enum HIGHLIGHTER {
         
@@ -30,31 +31,30 @@ public class View {
 
     /**
      *
-     * @param word
-     * @return
-     */
-    public static boolean validateInput(String word) {
-        assert word != null;
-        boolean notValidWord = false;
-        String special = " !#$%&'()*+,-./:;<=>?@[]^_`{|}~0123456789;";
-        for (int i = 0; i < special.length(); i++) {
-            char specialChar = special.charAt(i);
-            for (int k = 0; k < word.length(); k++) {
-                char charFromWord = word.charAt(k);
-                if (specialChar == charFromWord) {
-                    notValidWord = true;
-                }
-            }
-        }
-        return word.length() == 5 && !notValidWord;
-    }
-
-    /**
-     *
      * @param answer
      */
     public static void printAnswer(String answer) {
         System.out.println("Answer:\n " + answer);
+    }
+    
+    /**
+     *
+     * @param wordle
+     */
+    public static void result_message(Wordle wordle) {
+        if (wordle.hasLost()){
+            System.out.println("==================\n     You lose!\n==================");
+        }
+        if (wordle.hasWon()) {
+            System.out.println("==================\n    Well done!\n==================");
+        }
+    }
+    
+    /**
+     *
+     */
+    public static void validating_message() {
+        System.out.println("Please use a-z A-Z characters or write 5 letters only");
     }
 
     /**
