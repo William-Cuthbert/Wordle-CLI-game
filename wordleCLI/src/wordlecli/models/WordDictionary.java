@@ -8,44 +8,52 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class WordDictionary {
-    
+
     private final List<String> targetWords;
-    private final List<String> guessWords;
-    
+    private final List<String> validWords;
+
     /**
      *
-     * @param filePath1
-     * @param filePath2
+     * @param filePathToTargetWords
+     * @param filePathToValidWords
      * @throws IOException
      */
-    public WordDictionary(String filePath1, String filePath2) throws IOException {
-        this.targetWords = Files.readAllLines(Paths.get(filePath1)).stream().collect(Collectors.toList());
-        this.guessWords = Files.readAllLines(Paths.get(filePath2)).stream().collect(Collectors.toList());
+    public WordDictionary(String filePathToTargetWords, String filePathToValidWords) throws IOException {
+        this.targetWords = Files.readAllLines(Paths.get(filePathToTargetWords)).stream().collect(Collectors.toList());
+        this.validWords = Files.readAllLines(Paths.get(filePathToValidWords)).stream().collect(Collectors.toList());
     }
-    
+
     /**
      *
      * @return
      */
-    public String getRandomWord() {
+    public final String getRandomWord() {
         return targetWords.get(new Random().nextInt(targetWords.size()));
     }
-    
+
+    /**
+     *
+     * @return
+     */
+    public final String getFixedWord() {
+        return targetWords.get(5);
+    }
+
     /**
      *
      * @param word
      * @return
      */
-    public boolean containsTargetWords(String word) {
+    public boolean containsTargetWord(String word) {
         return targetWords.contains(word);
     }
-    
+
     /**
      *
      * @param word
      * @return
      */
-    public boolean containsGuessWords(String word) {
-        return guessWords.contains(word);
+    public boolean containsValidWord(String word) {
+        return validWords.contains(word);
     }
 }
