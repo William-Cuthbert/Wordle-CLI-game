@@ -5,6 +5,7 @@ import java.io.IOException;
 
 public class Wordle {
 
+    private boolean debugger;
     private int rowCount;
     private int colCount;
     private ArrayList<String> guesses;
@@ -18,40 +19,58 @@ public class Wordle {
      * @throws IOException
      */
     public Wordle() throws IOException {
-        setUpWord();
+        resetGame();
     }
-    
+
     /**
      *
      * @param filePath
      */
-    private void setUpWord() throws IOException {
+    private void resetGame() throws IOException {
         assert this != null;
+        this.debugger = true;
         this.rowCount = 6;
         this.colCount = 5;
         this.guesses = new ArrayList<>();
         this.dictionary = new WordDictionary(filePathToTargetWords, filePathToGuessWords);
         this.answer = dictionary.getRandomWord();
+//        this.answer = dictionary.getFixedWord();
     }
-    
+
+    /**
+     *
+     * @param debug
+     */
+    public void setDebug(boolean debug) {
+        this.debugger = debug;
+    }
+
     /**
      *
      * @return
      */
-    public int getRowCount() {
+    public final boolean getDebug() {
+        return debugger;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public final int getRowCount() {
         assert rowCount != 0;
         return rowCount;
     }
-    
+
     /**
      *
      * @return
      */
-    public int getColCount() {
+    public final int getColCount() {
         assert colCount != 0;
         return colCount;
     }
-    
+
     /**
      *
      * @return
@@ -60,17 +79,24 @@ public class Wordle {
         assert !guesses.isEmpty();
         return guesses.size();
     }
-    
+
     /**
      *
      * @param index
      * @return
      */
     public final String getGuessIndex(int index) {
-        assert index >= 0 && index <= 6;
+        assert index >= 0 && index <= getRowCount();
         return guesses.get(index);
     }
-    
+
+    /**
+     *
+     */
+    public final void fixedAnswer() {
+        this.answer = dictionary.getFixedWord();
+    }
+
     /**
      *
      * @return
@@ -79,7 +105,7 @@ public class Wordle {
         assert answer != null;
         return answer;
     }
-    
+
     /**
      *
      * @return
@@ -88,7 +114,7 @@ public class Wordle {
         assert guesses.size() >= 1;
         return guesses.contains(getAnswer());
     }
-    
+
     /**
      *
      * @return
@@ -96,7 +122,7 @@ public class Wordle {
     public boolean hasLost() {
         return guesses.size() == getRowCount();
     }
-    
+
     /**
      *
      * @return
@@ -104,23 +130,24 @@ public class Wordle {
     public boolean isGameOver() {
         return hasWon() || hasLost();
     }
-    
+
     /**
      *
-     * @param str
+     * @param word
      */
-    public void addGuess(String str) {
-        if (str.length() == getColCount() && dictionary.containsTargetWords(str) || dictionary.containsGuessWords(str)) {
-            guesses.add(str);
+    public void addGuess(String word) {
+        assert word != null;
+        if (word.length() == getColCount() && dictionary.containsTargetWord(word) || dictionary.containsValidWord(word)) {
+            guesses.add(word);
         }
     }
-    
+
     /**
      *
-     * @param str
+     * @param word
      * @return
      */
-    public boolean notInDictionary(String str) {
-        return !dictionary.containsGuessWords(str) && !dictionary.containsTargetWords(str);
+    public boolean notInDictionary(String word) {
+        return !dictionary.containsValidWord(word) && !dictionary.containsTargetWord(word);
     }
 }
