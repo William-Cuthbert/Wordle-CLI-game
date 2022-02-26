@@ -9,15 +9,18 @@ import java.util.stream.Collectors;
 
 public class WordDictionary {
     
-    private final List<String> words;
+    private final List<String> targetWords;
+    private final List<String> guessWords;
     
     /**
      *
-     * @param filePath
+     * @param filePath1
+     * @param filePath2
      * @throws IOException
      */
-    public WordDictionary(String filePath) throws IOException {
-        this.words = Files.readAllLines(Paths.get(filePath)).stream().collect(Collectors.toList());
+    public WordDictionary(String filePath1, String filePath2) throws IOException {
+        this.targetWords = Files.readAllLines(Paths.get(filePath1)).stream().collect(Collectors.toList());
+        this.guessWords = Files.readAllLines(Paths.get(filePath2)).stream().collect(Collectors.toList());
     }
     
     /**
@@ -25,7 +28,7 @@ public class WordDictionary {
      * @return
      */
     public String getRandomWord() {
-        return words.get(new Random().nextInt(words.size()));
+        return targetWords.get(new Random().nextInt(targetWords.size()));
     }
     
     /**
@@ -33,7 +36,16 @@ public class WordDictionary {
      * @param word
      * @return
      */
-    public boolean containsWord(String word) {
-        return words.contains(word);
+    public boolean containsTargetWords(String word) {
+        return targetWords.contains(word);
+    }
+    
+    /**
+     *
+     * @param word
+     * @return
+     */
+    public boolean containsGuessWords(String word) {
+        return guessWords.contains(word);
     }
 }
