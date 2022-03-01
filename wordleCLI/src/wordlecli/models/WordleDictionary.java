@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class WordDictionary {
+public class WordleDictionary {
 
     private final List<String> targetWords;
     private final List<String> validWords;
@@ -18,7 +18,7 @@ public class WordDictionary {
      * @param filePathToValidWords
      * @throws IOException
      */
-    public WordDictionary(String filePathToTargetWords, String filePathToValidWords) throws IOException {
+    public WordleDictionary(String filePathToTargetWords, String filePathToValidWords) throws IOException {
         this.targetWords = Files.readAllLines(Paths.get(filePathToTargetWords)).stream().collect(Collectors.toList());
         this.validWords = Files.readAllLines(Paths.get(filePathToValidWords)).stream().collect(Collectors.toList());
     }
@@ -29,14 +29,6 @@ public class WordDictionary {
      */
     public final String getRandomWord() {
         return targetWords.get(new Random().nextInt(targetWords.size()));
-    }
-
-    /**
-     *
-     * @return
-     */
-    public final String getFixedWord() {
-        return targetWords.get(5);
     }
 
     /**
