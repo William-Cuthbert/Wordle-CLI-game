@@ -8,22 +8,22 @@ public class CommandLine {
     private static String format = " ";
 
     /**
-     *
+     * asks for user's input
      */
     public static void requestInput() {
         System.out.print("Enter a valid word:\n");
     }
 
     /**
-     *
-     * @param answer
+     * displays the answer on the screen
+     * @param answer is used to format the string.
      */
     public static void displayAnswer(String answer) {
         System.out.println("Answer:\n " + answer);
     }
 
     /**
-     *
+     * displays the message when user has won or lost
      * @param user
      */
     public static void resultMessage(Wordle user) {
@@ -36,14 +36,14 @@ public class CommandLine {
     }
 
     /**
-     *
+     * displays the message to prompt for user to enter valid characters
      */
     public static void validateMessage() {
-        System.out.println("Please use a-z A-Z characters or write 5 letters only");
+        System.out.println("Please use a-z A-Z characters and write 5 letters only");
     }
 
     /**
-     *
+     * clears up the command line using unicodes
      */
     public static void cleanUp() {
         System.out.print("\033\143");
@@ -51,26 +51,31 @@ public class CommandLine {
     }
 
     /**
-     *
-     * @param wordleGame
+     * displays the game board
+     * @param wordle used to extract necessary logic from the model.
      */
-    public static void printGameBoard(Wordle wordleGame) {
+    public static void printGameBoard(Wordle wordle) {
         System.out.println(title);
-        for (int i = 0; i < wordleGame.getRowCount(); i++) {
-            if (i < wordleGame.countGuesses()) {
-                Comparison(wordleGame.getGuessIndex(i), wordleGame.getAnswer());
+        for (int i = 0; i < wordle.getRowCount(); i++) {
+            if (i < wordle.countGuesses()) {
+                Comparison(wordle.getGuessIndex(i), wordle.getAnswer());
             } else {
-                Formatting(" |".repeat(wordleGame.getColCount() - 1));
+                Formatting(" |".repeat(wordle.getColCount() - 1));
             }
 
-            if (i != wordleGame.getRowCount() - 1) {
-                Formatting("-".repeat(wordleGame.getColCount() * 2 - 1));
+            if (i != wordle.getRowCount() - 1) {
+                Formatting("-".repeat(wordle.getColCount() * 2 - 1));
             } else {
                 Formatting("");
             }
         }
     }
 
+    /**
+     * compares the input word to the answer and highlights each character.
+     * @param inputWord gets the word from the guess list
+     * @param getAnswer gets the answer from wordle.
+     */
     private static void Comparison(String inputWord, String getAnswer) {
         assert inputWord != null && getAnswer != null;
         String result = "";
@@ -91,10 +96,19 @@ public class CommandLine {
         Formatting(result);
     }
 
-    private static String toHighlight(String word, ColorPanel highlight) {
-        return highlight.backgroundColor + word + ColorPanel.backgroundReset;
+    /**
+     * highlights the char
+     * @param character is the char to highlight
+     * @param highlight is the colour to highlight.
+     */
+    private static String toHighlight(String character, ColorPanel highlight) {
+        return highlight.backgroundColor + character + ColorPanel.backgroundReset;
     }
 
+    /**
+     * helps to format the game board
+     * @param str is the string to add to the format.
+     */
     private static void Formatting(String str) {
         System.out.println(format + str);
     }
