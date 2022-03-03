@@ -5,7 +5,7 @@ import wordlecli.models.Wordle;
 public class CommandLine {
 
     private static final String title = "\n==================\n     WORDLE\n==================\n";
-    private static String format = " ";
+    private static String format = "    ";
 
     /**
      * asks for user's input
