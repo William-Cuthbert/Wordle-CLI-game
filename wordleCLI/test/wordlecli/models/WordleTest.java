@@ -49,10 +49,29 @@ public class WordleTest {
      * @throws IOException due to reading the files in wordle dictionary
      */
     @Test
-    public void wordle_is_not_gameover() throws IOException{
+    public void wordle_is_not_gameover_invalid_word_length() throws IOException{
         Wordle wordle = new Wordle();
-        wordle.setAnswer("grade");
+        wordle.setAnswer("stand");
         ArrayList<String> words = new ArrayList<>(Arrays.asList("words","tests","cigar","tiger","fiver","stan"));
+        for (String word : words) {
+            if (!wordle.isGameOver()) {
+                wordle.addGuess(word);
+            }
+        }
+        assertEquals(wordle.isGameOver(), false);
+    }
+    
+    /**
+     * The test is to check whether the game is over or not.
+     * The last word in the words list contains a special character '%'.
+     * This should provoke wordle to continue the game until the last guess is a valid word.
+     * @throws IOException due to reading the files in wordle dictionary
+     */
+    @Test
+    public void wordle_is_not_gameover_invalid_characters() throws IOException{
+        Wordle wordle = new Wordle();
+        wordle.setAnswer("stand");
+        ArrayList<String> words = new ArrayList<>(Arrays.asList("words","tests","cigar","tiger","fiver","st%nd"));
         for (String word : words) {
             if (!wordle.isGameOver()) {
                 wordle.addGuess(word);
