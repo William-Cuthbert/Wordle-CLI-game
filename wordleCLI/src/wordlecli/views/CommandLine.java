@@ -1,4 +1,4 @@
-package wordlecli.app;
+package wordlecli.views;
 
 import wordlecli.models.Wordle;
 
@@ -10,7 +10,7 @@ public class CommandLine {
     /**
      * asks for user's input
      */
-    public static void requestInput() {
+    public static void getInput() {
         System.out.print("Enter a valid word:\n");
     }
 
@@ -18,10 +18,14 @@ public class CommandLine {
      * displays the answer on the screen
      * @param answer is used to format the string.
      */
-    public static void displayAnswer(String answer) {
-        System.out.println("Answer:\n " + answer);
+    public static void printAnswer(String answer) {
+        System.out.println("Answer:\n" + answer);
     }
 
+    public static void printKeyboard(String word) {
+        System.out.println(Wordle.updateKeyboard(word));
+    }
+    
     /**
      * displays the message when user has won or lost
      * @param user
@@ -45,8 +49,7 @@ public class CommandLine {
     /**
      * clears up the command line using unicodes
      */
-    public static void cleanUp() {
-        System.out.print("\033\143");
+    public static void clear() {
         System.out.flush();
     }
 
@@ -81,28 +84,12 @@ public class CommandLine {
         String result = "";
         for (int index = 0; index < inputWord.length(); index++) {
             char getChar = inputWord.charAt(index);
-            if (index < inputWord.length() && getChar == getAnswer.charAt(index)) {
-                result += toHighlight(Character.toString(getChar), ColorPanel.GREEN);
-            } else if (getAnswer.contains(String.valueOf(getChar))) {
-                result += toHighlight(Character.toString(getChar), ColorPanel.YELLOW);
-            } else {
-                result += toHighlight(Character.toString(getChar), ColorPanel.GREY);
-            }
-
+            result += getChar;
             if (index != inputWord.length() - 1) {
                 result += "|";
             }
         }
         Formatting(result);
-    }
-
-    /**
-     * highlights the char
-     * @param character is the char to highlight
-     * @param highlight is the colour to highlight.
-     */
-    private static String toHighlight(String character, ColorPanel highlight) {
-        return highlight.backgroundColor + character + ColorPanel.backgroundReset;
     }
 
     /**

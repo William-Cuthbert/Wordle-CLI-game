@@ -1,27 +1,24 @@
 package wordlecli.models;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Random;
+import java.nio.file.*;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class WordleDictionary {
 
-    private final List<String> targetWords;
-    private final List<String> validWords;
+    private final List<String> targetWords, validWords;
+    private final static String filePathToTargetWords = "C:/Users/wcuth/Documents/GitHub/wordleCLI-game/wordleCLI/dictionary/common.txt";
+    private final static String filePathToGuessWords = "C:/Users/wcuth/Documents/GitHub/wordleCLI-game/wordleCLI/dictionary/words.txt";
 
     /**
      * sets up the wordle dictionary
      * creates two lists to store both target and valid words.
-     * @param filePathToTargetWords is used to find the file address to the target words 'common.txt'
-     * @param filePathToValidWords is used to find the file address to the valid words 'word.txt'
      * @throws IOException due to reading files from.
      */
-    public WordleDictionary(String filePathToTargetWords, String filePathToValidWords) throws IOException {
+    public WordleDictionary() throws IOException {
         this.targetWords = Files.readAllLines(Paths.get(filePathToTargetWords)).stream().collect(Collectors.toList());
-        this.validWords = Files.readAllLines(Paths.get(filePathToValidWords)).stream().collect(Collectors.toList());
+        this.validWords = Files.readAllLines(Paths.get(filePathToGuessWords)).stream().collect(Collectors.toList());
     }
 
     /**

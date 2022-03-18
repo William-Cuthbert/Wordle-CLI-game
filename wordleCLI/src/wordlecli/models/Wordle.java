@@ -1,153 +1,150 @@
 package wordlecli.models;
 
-import java.util.ArrayList;
 import java.io.IOException;
+import java.util.*;
 
-public class Wordle {
+public final class Wordle extends Observable {
 
     private boolean debugger;
-    private int rowCount;
-    private int colCount;
-    private ArrayList<String> guesses;
-    private String answer;
+    private int rowCount, colCount, currentTries;
+    private static String answer;
+    private String currentGuess;
+    private static ArrayList<String> guesses, keyboard;
     private WordleDictionary dictionary;
-    private final static String filePathToTargetWords = "C:/Users/wcuth/Documents/GitHub/wordleCLI-game/wordleCLI/dictionary/common.txt";
-    private final static String filePathToGuessWords = "C:/Users/wcuth/Documents/GitHub/wordleCLI-game/wordleCLI/dictionary/words.txt";
 
-    /**
-     * sets up the instance of wordle game with answer generated
-     * from wordle dictionary class.
-     * @throws IOException due to read the files in wordle dictionary.
-     */
     public Wordle() throws IOException {
         resetGame();
     }
 
-    /**
-     * sets up the game with the original states in place
-     * when user wants to start a new game or restart during 
-     * current game.
-     * @throws IOException due to reading the files in wordle dictionary
-     */
     public final void resetGame() throws IOException {
-        assert this != null;
         this.debugger = true;
         this.rowCount = 6;
         this.colCount = 5;
+        this.currentTries = 0;
+        this.currentGuess = "";
         this.guesses = new ArrayList<>();
-        this.dictionary = new WordleDictionary(filePathToTargetWords, filePathToGuessWords);
+        this.keyboard = new ArrayList<>(Arrays.asList("Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"));
+        this.dictionary = new WordleDictionary();
         this.answer = dictionary.getRandomWord();
+        setChanged();
+        notifyObservers();
     }
 
-    /**
-     * sets the debug mode of wordle
-     * @param debug
-     */
-    public void setDebug(boolean debug) {
-        this.debugger = debug;
-    }
-
-    /**
-     * @return the debug state of wordle
-     */
-    public final boolean getDebug() {
-        return debugger;
-    }
-
-    /**
-     * @return the number of rows
-     */
-    public final int getRowCount() {
-        assert rowCount != 0;
-        return rowCount;
-    }
-
-    /**
-     * @return the number of columns
-     */
-    public final int getColCount() {
-        assert colCount != 0;
-        return colCount;
-    }
-
-    /**
-     * @return the guess list size
-     */
-    public int countGuesses() {
-        assert !guesses.isEmpty();
-        return guesses.size();
-    }
-
-    /**
-     * getting the word value from the guess list
-     * @param index used to pinpoint the index position in the list
-     * @return the word value at the index position int the list
-     */
-    public final String getGuessIndex(int index) {
-        assert index >= 0 && index <= getRowCount();
-        return guesses.get(index);
-    }
-
-    /**
-     * sets the answer state for debugging purposes.
-     * @param answer used to set the answer for the game
-     */
     public void setAnswer(String answer) {
         this.answer = answer;
     }
 
-    /**
-     * @return the answer for the current game
-     */
-    public final String getAnswer() {
-        assert answer != null;
+    public final boolean getDebug() {
+        return debugger;
+    }
+    
+    public final int getRowCount() {
+        return rowCount;
+    }
+
+    public final int getColCount() {
+        return colCount;
+    }
+
+    public int getCurrentTries() {
+        return currentTries;
+    }
+    
+    public static ArrayList getKeyboard() {
+        return keyboard;
+    }
+
+    public int getKeyboardSize() {
+        return keyboard.size();
+    }
+
+    public String getKeyboardIndex(int index) {
+        return keyboard.get(index);
+    }
+
+    public int countGuesses() {
+        return guesses.size();
+    }
+
+    public String getGuessIndex(int index) {
+        return guesses.get(index);
+    }
+
+    public static final String getAnswer() {
         return answer;
     }
 
-    /**
-     * checks whether the user has won the game
-     * @return true or false
-     */
+    public String getCurrentWord() {
+        return currentGuess;
+    }
+
+    public static String updateKeyboard(String word) {
+        String letters = "keyboard:\n";
+        compareLettersInKeyboard(word, getAnswer());
+        for (Object letterInList : getKeyboard()) {
+            letters += letterInList + " ";
+        }
+        return letters;
+    }
+
     public boolean hasWon() {
         return guesses.contains(getAnswer());
     }
 
-    /**
-     * checks whether the user has lost the game
-     * @return true or false
-     */
     public boolean hasLost() {
         return guesses.size() == getRowCount();
     }
 
-    /**
-     * check whether the game is over
-     * @return true or false from hasWon() or hasLost() methods
-     */
     public boolean isGameOver() {
         return hasWon() || hasLost();
     }
 
-    /**
-     * checks if word is valid then
-     * adds the word to the guess list
-     * @param word used to identify the word to validate
-     * before adding to the guess list
-     */
+    public boolean isInDictionary(String word) {
+        return dictionary.containsTargetWord(word) || dictionary.containsValidWord(word);
+    }
+
+    public boolean notInDictionary(String word) {
+        return !dictionary.containsValidWord(word) && !dictionary.containsTargetWord(word);
+    }
+
+    public static boolean matchedLetter(int index, char nthChar, String getAnswer) {
+        return nthChar == getAnswer.charAt(index);
+    }
+
+    public static boolean mismatchedLetter(char nthChar, String getAnswer) {
+        return getAnswer.contains(String.valueOf(nthChar));
+    }
+
     public void addGuess(String word) {
-        assert word != null;
-        if (word.length() == getColCount() && dictionary.containsTargetWord(word) || dictionary.containsValidWord(word)) {
+        word = word.toLowerCase();
+        if (validatingWord(word)) {
+            setCurrentWord(word);
             guesses.add(word);
+            currentTries++;
+            setChanged();
+            notifyObservers();
+        }
+    }
+    
+    private void setCurrentWord(String word) {
+        this.currentGuess = word;
+    }
+    
+    private boolean validatingWord(String word) {
+        return word.length() == getColCount() && isInDictionary(word);
+    }
+
+    private static void compareLettersInKeyboard(String guess, String getAnswer) {
+        assert guess != null && getAnswer != null;
+        for (int index = 0; index < guess.length(); index++) {
+            char nthChar = guess.charAt(index);
+            if (!matchedLetter(index, nthChar, getAnswer) && !mismatchedLetter(nthChar, getAnswer)) {
+                keyboard.remove(String.valueOf(nthChar).toUpperCase());
+            }
         }
     }
 
-    /**
-     * checks whether the word is or not in wordle dictionary as 
-     * a way of validating
-     * @param word used to identify if the dictionary contains the word or not
-     * @return true or false
-     */
-    public boolean notInDictionary(String word) {
-        return !dictionary.containsValidWord(word) && !dictionary.containsTargetWord(word);
+    public void setDebug(boolean debug) {
+        this.debugger = debug;
     }
 }
