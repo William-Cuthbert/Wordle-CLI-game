@@ -5,11 +5,9 @@ import java.util.*;
 
 public final class Wordle extends Observable {
 
-    private boolean debugger;
     private int rowCount, colCount, currentTries;
-    private static String answer;
-    private String currentGuess;
-    private static ArrayList<String> guesses, keyboard;
+    private String answer, currentGuess;
+    private ArrayList<String> guesses, keyboard;
     private WordleDictionary dictionary;
 
     public Wordle() throws IOException {
@@ -17,7 +15,6 @@ public final class Wordle extends Observable {
     }
 
     public final void resetGame() throws IOException {
-        this.debugger = true;
         this.rowCount = 6;
         this.colCount = 5;
         this.currentTries = 0;
@@ -33,10 +30,6 @@ public final class Wordle extends Observable {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-
-    public final boolean getDebug() {
-        return debugger;
-    }
     
     public final int getRowCount() {
         return rowCount;
@@ -50,27 +43,26 @@ public final class Wordle extends Observable {
         return currentTries;
     }
     
-    public static ArrayList getKeyboard() {
+    public ArrayList getKeyboard() {
         return keyboard;
     }
 
-    public int getKeyboardSize() {
-        return keyboard.size();
-    }
-
     public String getKeyboardIndex(int index) {
+        assert index >= 0 && index < getKeyboard().size();
         return keyboard.get(index);
     }
 
     public int countGuesses() {
+        assert guesses.size() <= getRowCount();
         return guesses.size();
     }
 
     public String getGuessIndex(int index) {
+        assert index >= 0 && index < countGuesses();
         return guesses.get(index);
     }
 
-    public static final String getAnswer() {
+    public final String getAnswer() {
         return answer;
     }
 
@@ -78,9 +70,9 @@ public final class Wordle extends Observable {
         return currentGuess;
     }
 
-    public static String updateKeyboard(String word) {
+    public String updateKeyboard(String word) {
         String letters = "keyboard:\n";
-        compareLettersInKeyboard(word, getAnswer());
+        compareLettersInKeyboard(word);
         for (Object letterInList : getKeyboard()) {
             letters += letterInList + " ";
         }
@@ -88,10 +80,12 @@ public final class Wordle extends Observable {
     }
 
     public boolean hasWon() {
+        assert getAnswer().length() == getColCount();
         return guesses.contains(getAnswer());
     }
 
     public boolean hasLost() {
+        assert getRowCount() == 6;
         return guesses.size() == getRowCount();
     }
 
@@ -99,25 +93,23 @@ public final class Wordle extends Observable {
         return hasWon() || hasLost();
     }
 
-    public boolean isInDictionary(String word) {
+    public boolean inDictionary(String word) {
         return dictionary.containsTargetWord(word) || dictionary.containsValidWord(word);
     }
 
-    public boolean notInDictionary(String word) {
-        return !dictionary.containsValidWord(word) && !dictionary.containsTargetWord(word);
+    public boolean matchedLetter(int index, char nthChar) {
+        assert index >= 0 && index < getColCount();
+        return nthChar == getAnswer().charAt(index);
     }
 
-    public static boolean matchedLetter(int index, char nthChar, String getAnswer) {
-        return nthChar == getAnswer.charAt(index);
-    }
-
-    public static boolean mismatchedLetter(char nthChar, String getAnswer) {
-        return getAnswer.contains(String.valueOf(nthChar));
+    public boolean mismatchedLetter(char nthChar) {
+        return getAnswer().contains(String.valueOf(nthChar));
     }
 
     public void addGuess(String word) {
+        assert getColCount() == 5;
         word = word.toLowerCase();
-        if (validatingWord(word)) {
+        if (validWord(word)) {
             setCurrentWord(word);
             guesses.add(word);
             currentTries++;
@@ -130,21 +122,17 @@ public final class Wordle extends Observable {
         this.currentGuess = word;
     }
     
-    private boolean validatingWord(String word) {
-        return word.length() == getColCount() && isInDictionary(word);
+    private boolean validWord(String word) {
+        return word.length() == getColCount() && inDictionary(word);
     }
 
-    private static void compareLettersInKeyboard(String guess, String getAnswer) {
-        assert guess != null && getAnswer != null;
+    private void compareLettersInKeyboard(String guess) {
+        assert guess.length() == getColCount();
         for (int index = 0; index < guess.length(); index++) {
             char nthChar = guess.charAt(index);
-            if (!matchedLetter(index, nthChar, getAnswer) && !mismatchedLetter(nthChar, getAnswer)) {
+            if (!matchedLetter(index, nthChar) && !mismatchedLetter(nthChar)) {
                 keyboard.remove(String.valueOf(nthChar).toUpperCase());
             }
         }
-    }
-
-    public void setDebug(boolean debug) {
-        this.debugger = debug;
     }
 }

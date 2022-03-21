@@ -10,40 +10,40 @@ public class Main {
     public static void main(String[] args) throws IOException {
         
         Wordle wordle = new Wordle();
-        wordle.setDebug(true);
+        CommandLine cli = new CommandLine(wordle);
 
         try (Scanner guessWord = new Scanner(System.in)) {
             String input;
-            CommandLine.printKeyboard("");
+            cli.printKeyboard("");
 
             while (!wordle.isGameOver()) {
-                CommandLine.clear();
-                CommandLine.printGameBoard(wordle);
+                cli.clear();
+                cli.printGameBoard(wordle);
 
-                if (wordle.getDebug()) {
-                    CommandLine.printAnswer(wordle.getAnswer());
+                if (true) {
+                    cli.printAnswer(wordle.getAnswer());
                 }
 
-                CommandLine.getInput();
+                cli.getInput();
                 input = guessWord.nextLine();
                 
-                while (wordle.notInDictionary(input)) {
-                    CommandLine.validateMessage();
-                    CommandLine.getInput();
+                while (!wordle.inDictionary(input)) {
+                    cli.validateMessage();
+                    cli.getInput();
                     input = guessWord.nextLine();
                 }
 
                 wordle.addGuess(input);
-                CommandLine.printKeyboard(input);
+                cli.printKeyboard(input);
             }
 
-            CommandLine.clear();
-            CommandLine.printGameBoard(wordle);
-            CommandLine.printAnswer(wordle.getAnswer());
-            CommandLine.printKeyboard("");
+            cli.clear();
+            cli.printGameBoard(wordle);
+            cli.printAnswer(wordle.getAnswer());
+            cli.printKeyboard("");
             guessWord.close();
 
-            CommandLine.resultMessage(wordle);
+            cli.resultMessage(wordle);
         }
     }
 }
