@@ -43,7 +43,7 @@ public class Main {
             cli.printKeyboard("");
             guessWord.close();
 
-            cli.resultMessage(wordle);
+            cli.resultMessage();
         }
     }
 }

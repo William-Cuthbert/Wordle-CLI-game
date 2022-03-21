@@ -4,9 +4,9 @@ import wordlecli.models.Wordle;
 
 public class CommandLine {
 
-    private final String title = "\n==================\n     WORDLE\n==================\n";
-    private String format = "    ";
-    private Wordle wordle;
+    private final String title = "\n==================\nWORDLE\n==================\n";
+    private final String format = "    ";
+    private final Wordle wordle;
     
     public CommandLine(Wordle wordle) {
         this.wordle = wordle;
@@ -35,11 +35,11 @@ public class CommandLine {
      * displays the message when user has won or lost
      * @param user
      */
-    public void resultMessage(Wordle user) {
-        if (user.hasLost()) {
+    public void resultMessage() {
+        if (wordle.hasLost()) {
             System.out.println("==================\n    You lose!\n==================");
         }
-        if (user.hasWon()) {
+        if (wordle.hasWon()) {
             System.out.println("==================\n    Well done!\n==================");
         }
     }
