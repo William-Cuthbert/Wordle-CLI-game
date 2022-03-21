@@ -21,7 +21,6 @@ public class CommandLine {
 
     /**
      * displays the answer on the screen
-     * @param answer is used to format the string.
      */
     public void printAnswer() {
         System.out.println("Answer:\n" + wordle.getAnswer());
@@ -33,7 +32,6 @@ public class CommandLine {
     
     /**
      * displays the message when user has won or lost
-     * @param user
      */
     public void resultMessage() {
         if (wordle.hasLost()) {
@@ -65,7 +63,7 @@ public class CommandLine {
         System.out.println(title);
         for (int i = 0; i < wordle.getRowCount(); i++) {
             if (i < wordle.countGuesses()) {
-                Comparison(wordle.getGuessIndex(i), wordle.getAnswer());
+                Comparison(wordle.getGuessIndex(i));
             } else {
                 Formatting(" |".repeat(wordle.getColCount() - 1));
             }
@@ -81,10 +79,8 @@ public class CommandLine {
     /**
      * compares the input word to the answer and highlights each character.
      * @param inputWord gets the word from the guess list
-     * @param getAnswer gets the answer from wordle.
      */
-    private void Comparison(String inputWord, String getAnswer) {
-        assert inputWord != null && getAnswer != null;
+    private void Comparison(String inputWord) {
         String result = "";
         for (int index = 0; index < inputWord.length(); index++) {
             char getChar = inputWord.charAt(index);

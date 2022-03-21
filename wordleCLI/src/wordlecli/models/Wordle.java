@@ -71,6 +71,7 @@ public final class Wordle extends Observable {
     }
 
     public String updateKeyboard(String word) {
+        assert validWord(word);
         String letters = "keyboard:\n";
         compareLettersInKeyboard(word);
         for (Object letterInList : getKeyboard()) {
