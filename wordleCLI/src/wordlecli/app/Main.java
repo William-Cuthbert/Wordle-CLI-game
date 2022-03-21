@@ -125,7 +125,6 @@ public class Main {
 
         /**
          * compares the input word to the answer and highlights each character.
-         *
          * @param inputWord gets the word from the guess list
          */
         private void addToFormat(String inputWord) {
@@ -142,7 +141,6 @@ public class Main {
 
         /**
          * helps to format the game board
-         *
          * @param str is the string to add to the format.
          */
         private void Formatting(String str) {
