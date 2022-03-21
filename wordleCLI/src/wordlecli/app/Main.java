@@ -18,10 +18,10 @@ public class Main {
 
             while (!wordle.isGameOver()) {
                 cli.clear();
-                cli.printGameBoard(wordle);
+                cli.printGameBoard();
 
                 if (true) {
-                    cli.printAnswer(wordle.getAnswer());
+                    cli.printAnswer();
                 }
 
                 cli.getInput();
@@ -38,8 +38,8 @@ public class Main {
             }
 
             cli.clear();
-            cli.printGameBoard(wordle);
-            cli.printAnswer(wordle.getAnswer());
+            cli.printGameBoard();
+            cli.printAnswer();
             cli.printKeyboard("");
             guessWord.close();
 

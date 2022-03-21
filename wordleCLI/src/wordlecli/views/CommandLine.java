@@ -23,8 +23,8 @@ public class CommandLine {
      * displays the answer on the screen
      * @param answer is used to format the string.
      */
-    public void printAnswer(String answer) {
-        System.out.println("Answer:\n" + answer);
+    public void printAnswer() {
+        System.out.println("Answer:\n" + wordle.getAnswer());
     }
 
     public void printKeyboard(String word) {
@@ -60,9 +60,8 @@ public class CommandLine {
 
     /**
      * displays the game board
-     * @param wordle used to extract necessary logic from the model.
      */
-    public void printGameBoard(Wordle wordle) {
+    public void printGameBoard() {
         System.out.println(title);
         for (int i = 0; i < wordle.getRowCount(); i++) {
             if (i < wordle.countGuesses()) {
