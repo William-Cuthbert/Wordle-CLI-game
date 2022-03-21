@@ -27,8 +27,8 @@ public class CommandLine {
         System.out.println("Answer:\n" + wordle.getAnswer());
     }
 
-    public void printKeyboard(String word) {
-        System.out.println(wordle.updateKeyboard(word));
+    public void printKeyboard() {
+        System.out.println(wordle.updateKeyboard(wordle.getCurrentWord()));
     }
     
     /**

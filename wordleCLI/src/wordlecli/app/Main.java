@@ -14,7 +14,7 @@ public class Main {
 
         try (Scanner guessWord = new Scanner(System.in)) {
             String input;
-            cli.printKeyboard("");
+            cli.printKeyboard();
 
             while (!wordle.isGameOver()) {
                 cli.clear();
@@ -34,13 +34,13 @@ public class Main {
                 }
 
                 wordle.addGuess(input);
-                cli.printKeyboard(input);
+                cli.printKeyboard();
             }
 
             cli.clear();
             cli.printGameBoard();
             cli.printAnswer();
-            cli.printKeyboard("");
+            cli.printKeyboard();
             guessWord.close();
 
             cli.resultMessage();
