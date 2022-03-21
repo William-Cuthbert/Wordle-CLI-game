@@ -49,7 +49,7 @@ public class Main {
         }
     }
 
-    public static class CommandLine {
+    private static class CommandLine {
 
         private final String title = "\n==================\nWORDLE\n==================\n";
         private final String format = "    ";
