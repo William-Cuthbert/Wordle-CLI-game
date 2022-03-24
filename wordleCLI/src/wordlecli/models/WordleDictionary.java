@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 public class WordleDictionary {
 
     private final List<String> targetWords, validWords;
-    private final static String filePathToTargetWords = "C:/Users/wcuth/Documents/GitHub/wordleCLI-game/wordleCLI/dictionary/common.txt";
-    private final static String filePathToGuessWords = "C:/Users/wcuth/Documents/GitHub/wordleCLI-game/wordleCLI/dictionary/words.txt";
+    private final static String filePathToTargetWords = "..\\\\wordleCLI\\\\dictionary\\\\common.txt";
+    private final static String filePathToGuessWords = "..\\\\wordleCLI\\\\dictionary\\\\words.txt";
 
     /**
      * sets up the wordle dictionary
